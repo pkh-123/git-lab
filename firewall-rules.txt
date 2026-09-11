@@ -1,1 +1,1 @@
-Allow TCP 22 from admin network
+Allow TCP 22 from 10.20.0.0/24
