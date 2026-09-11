@@ -1,1 +1,2 @@
+Allow TCP 22 from 10.10.0.0/24
 Allow TCP 22 from 10.20.0.0/24
