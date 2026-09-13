@@ -35,3 +35,18 @@ jobs:
           grep -q '^private_ip=' server-info.txt
           grep -q '^Allow TCP 22 from ' firewall-rules.txt
           grep -q '^target=' monitoring.conf
+
+      - name: Build validated configuration bundle
+        run: |
+          mkdir -p dist
+          cp server-info.txt firewall-rules.txt monitoring.conf dist/
+          echo "commit=${GITHUB_SHA}" > dist/build-info.txt
+          tar -czf network-config-${GITHUB_SHA}.tar.gz -C dist .
+
+      - name: Upload validated configuration artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: network-config-${{ github.sha }}
+          path: network-config-${{ github.sha }}.tar.gz
+          if-no-files-found: error
+          retention-days: 7
