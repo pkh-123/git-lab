@@ -1,0 +1,34 @@
+name: Network Configuration Check
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  validate-config:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Show runner information
+        run: |
+          uname -a
+          pwd
+          ls -la
+
+      - name: Check required files
+        run: |
+          test -f server-info.txt
+          test -f firewall-rules.txt
+          test -f monitoring.conf
+
+      - name: Check required settings
+        run: |
+          grep -q '^hostname=' server-info.txt
+          grep -q '^private_ip=' server-info.txt
+          grep -q '^Allow TCP 22 from ' firewall-rules.txt
+          grep -q '^target=' monitoring.conf
