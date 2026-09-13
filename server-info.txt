@@ -1,3 +1,4 @@
+hostname=web01
 private_ip=10.0.1.10
 role=web-server
 environment=development
